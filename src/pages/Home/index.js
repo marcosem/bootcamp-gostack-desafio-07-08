@@ -81,7 +81,7 @@ function Home() {
     </Container>
   );
 }
-
+/*
 Home.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -90,5 +90,5 @@ Home.propTypes = {
     price: PropTypes.number.isRequired,
   }).isRequired,
 };
-
+*/
 export default Home;

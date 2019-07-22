@@ -14,6 +14,7 @@ const Routes = createAppContainer(
       Cart,
     },
     {
+      headerMode: 'float', // This make the header fixed at top, with no transition between views
       // initialRouteName: 'Cart',
       defaultNavigationOptions: navigation => ({
         header: Header({ ...navigation }),
