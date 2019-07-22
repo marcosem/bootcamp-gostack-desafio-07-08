@@ -4,11 +4,9 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Header from './components/Header';
 import colors from './styles/colors';
-// import logo from './assets/logo.svg';
 
 // createAppContainer it is like browser router
 // createStackNavigator it is a configuration type for routes - a header at top of application
-
 const Routes = createAppContainer(
   createStackNavigator(
     {
@@ -17,18 +15,18 @@ const Routes = createAppContainer(
     },
     {
       // initialRouteName: 'Cart',
-      /*
-      defaultNavigationOptions: () => ({
-        header: Header, // <Header {...navigation} />,
+      defaultNavigationOptions: navigation => ({
+        header: Header({ ...navigation }),
       }),
-      */
-      defaultNavigationOptions: {
-        header: Header,
-      },
-
       cardStyle: {
         backgroundColor: colors.dark,
       },
+      /*
+      defaultNavigationOptions: {
+        header: Header,
+      },
+      */
+
       /*
       header: Header,
       headerLayoutPreset: 'center',
