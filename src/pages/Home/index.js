@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { View } from 'react-native';
+import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
@@ -16,7 +16,7 @@ import {
   ButtonText,
 } from './styles';
 
-export default function Home() {
+function Home() {
   const [products, setProducts] = useState([]);
 
   // Load Products when creating the view
@@ -78,39 +78,17 @@ export default function Home() {
         keyExtractor={item => String(item.id)}
         renderItem={renderProduct}
       />
-
-      {/*
-      <Product>
-        <ProductImage
-          source={{
-            uri:
-              'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-          }}
-        />
-        <ProductTitle>Tênis de Caminhada Leve Confortável</ProductTitle>
-        <ProductPrice>{formatPrice(179.9)}</ProductPrice>
-        <AddToCartButton>
-          <ProductAmount>
-            <Icon name="add-shopping-cart" color="#fff" size={20} />
-            <ProductAmountText>2</ProductAmountText>
-          </ProductAmount>
-          <ButtonText>ADD TO CART</ButtonText>
-        </AddToCartButton>
-      </Product>
-        */}
     </Container>
   );
-
-  /*
-  return (
-    <Container>
-      <FlatList
-        horizontal
-        data={products}
-        keyExtractor={item => String(item.id)}
-        renderItem={renderProduct}
-      />
-    </Container>
-  );
-  */
 }
+
+Home.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }).isRequired,
+};
+
+export default Home;

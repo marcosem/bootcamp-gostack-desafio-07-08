@@ -3,7 +3,8 @@ import colors from '../../styles/colors';
 import logo from '../../assets/logo.png';
 
 export const Wrapper = styled.SafeAreaView`
-  flex: 0.12;
+  flex: 0;
+  padding-bottom: 65px;
   background: ${colors.dark};
   flex-direction: row;
 `;

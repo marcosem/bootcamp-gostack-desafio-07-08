@@ -29,7 +29,10 @@ export const ProductImage = styled.Image`
   height: 200px;
 `;
 
-export const ProductTitle = styled.Text`
+export const ProductTitle = styled.Text.attrs({
+  numberOfLines: 3,
+})`
+  height: 60px;
   font-size: 16px;
 `;
 
@@ -46,6 +49,7 @@ export const AddToCartButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   border-radius: 4px;
+
   margin-top: auto;
 `;
 
