@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
@@ -24,7 +24,6 @@ function Home() {
   useEffect(() => {
     // Declare an async function
     async function loadProducts() {
-      console.tron.warn('test');
       const response = await api.get('/products').catch(error => {
         console.tron.log(
           `There has been a problem with your fetch operation: ${error.message}`
@@ -56,7 +55,8 @@ function Home() {
       <Product key={item.id}>
         <ProductImage source={{ uri: item.image }} />
         <ProductTitle>{item.title}</ProductTitle>
-        <ProductPrice>{formatPrice(item.price)}</ProductPrice>
+        {/* <ProductPrice>{formatPrice(item.price)}</ProductPrice> */}
+        <ProductPrice>{item.priceFormatted}</ProductPrice>
         <AddToCartButton onPress={() => handleAddProduct(item.id)}>
           <ProductAmount>
             <Icon name="add-shopping-cart" color="#fff" size={20} />
