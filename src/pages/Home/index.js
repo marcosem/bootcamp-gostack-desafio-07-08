@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { FlatList, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
+import * as CartActions from '../../store/modules/cart/actions'; // importing both functions by using *
 import { formatPrice } from '../../util/format';
 import {
   Container,
@@ -18,6 +20,15 @@ import {
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState();
+  const amount = useSelector(state =>
+    state.cart.reduce((amountAux, product) => {
+      amountAux[product.id] = product.amount;
+      return amountAux;
+    }, {})
+  );
+
+  const dispatch = useDispatch();
 
   // Load Products when creating the view
   // Replace the componentDidMount
@@ -44,24 +55,40 @@ function Home() {
     loadProducts();
   }, []);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [amount]);
+
   function handleAddProduct(id) {
-    // dispatch(CartActions.addToCartRequest(id));
+    setLoading(true);
+    dispatch(CartActions.addToCartRequest(id));
   }
+
+  /*
+  handleAddProduct.propTypes = {
+    id: PropTypes.number.isRequired,
+  };
+  */
 
   function renderProduct({ item }) {
     // const { amount } = this.props;
-
     return (
       <Product key={item.id}>
         <ProductImage source={{ uri: item.image }} />
         <ProductTitle>{item.title}</ProductTitle>
         {/* <ProductPrice>{formatPrice(item.price)}</ProductPrice> */}
         <ProductPrice>{item.priceFormatted}</ProductPrice>
-        <AddToCartButton onPress={() => handleAddProduct(item.id)}>
+        <AddToCartButton
+          loading={loading}
+          onPress={() => handleAddProduct(item.id)}
+        >
           <ProductAmount>
-            <Icon name="add-shopping-cart" color="#fff" size={20} />
-            <ProductAmountText>2</ProductAmountText>
-            {/* <ProductAmountText>{amount[item.id] || 0}</ProductAmountText> */}
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Icon name="add-shopping-cart" color="#fff" size={20} />
+            )}
+            <ProductAmountText>{amount[item.id] || 0}</ProductAmountText>
           </ProductAmount>
           <ButtonText>ADD TO CART</ButtonText>
         </AddToCartButton>
@@ -69,12 +96,21 @@ function Home() {
     );
   }
 
+  renderProduct.propTypes = {
+    item: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      priceFormatted: PropTypes.string.isRequired,
+    }).isRequired,
+  };
+
   return (
     <Container>
       <FlatList
         horizontal
         data={products}
-        extraData="1"
+        extraData={amount}
         keyExtractor={item => String(item.id)}
         renderItem={renderProduct}
       />

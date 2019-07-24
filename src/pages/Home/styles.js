@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-// import { RectButton } from 'react-native-gesture-handler';
+import { RectButton } from 'react-native-gesture-handler';
 import { darken } from 'polished';
 import colors from '../../styles/colors';
 
@@ -44,13 +44,22 @@ export const ProductPrice = styled.Text`
   color: ${colors.dark};
 `;
 
+/*
 export const AddToCartButton = styled.TouchableOpacity`
   background: ${colors.primary};
   flex-direction: row;
   align-items: center;
   border-radius: 4px;
-
   margin-top: auto;
+`;
+*/
+export const AddToCartButton = styled(RectButton)`
+  background: ${colors.primary};
+  flex-direction: row;
+  align-items: center;
+  border-radius: 4px;
+  margin-top: auto;
+  opacity: ${props => (props.loading ? 0.7 : 1)};
 `;
 
 export const ProductAmount = styled.View`
